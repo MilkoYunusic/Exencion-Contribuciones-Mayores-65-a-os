@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía: Exención de Contribuciones para Vivienda Principal (Ley 21.850)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Estilos base adaptados a accesibilidad visual y contraste */
+    :root {
+      --navy-900: #0f1c2e;
+      --navy-800: #1a2a40;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --slate-800: #1e293b;
+      --slate-600: #475569;
+      --slate-100: #f1f5f9;
+      --amber-100: #fef3c7;
+      --amber-900: #78350f;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 19px;
+      line-height: 1.6;
+      color: #1e293b;
+      background-color: #f8fafc;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Indicador SVG animado y accesible */
+    .accordion-chevron {
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .accordion-btn[aria-expanded="true"] .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Animación suave para la tarjeta de preguntas */
+    .fade-in {
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Código de ruta oficial del SII */
+    .sii-badge {
+      background-color: #e2e8f0;
+      color: #0f172a;
+      padding: 0.15rem 0.45rem;
+      border-radius: 0.375rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9em;
+      word-break: break-word;
+    }
+
+    /* Optimización de impresión a 1 página */
+    @media print {
+      body {
+        font-size: 10.5pt !important;
+        line-height: 1.25 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+      .no-print, #wizard-container, .print-hide {
+        display: none !important;
+      }
+      .accordion-panel {
+        display: block !important;
+        padding: 6pt 0 !important;
+      }
+      .accordion-btn {
+        border-bottom: 1.5pt solid #0f1c2e !important;
+        background: transparent !important;
+        color: #000000 !important;
+        padding: 4pt 0 !important;
+      }
+      .accordion-chevron {
+        display: none !important;
+      }
+      .card-box {
+        border: 1pt solid #cbd5e1 !important;
+        box-shadow: none !important;
+        padding: 8pt !important;
+        margin: 6pt 0 !important;
+      }
+      header {
+        border-bottom: 2pt solid #0f1c2e !important;
+        padding-bottom: 8pt !important;
+      }
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-5">
+
+  <div class="max-w-xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+    
+    <!-- Encabezado de orientación ciudadana -->
+    <div class="bg-slate-900 text-slate-100 text-center py-2 px-4 text-sm font-semibold tracking-wide uppercase">
+      Guía de Orientación al Contribuyente
+    </div>
+
+    <!-- PRIMERA PANTALLA: Compacta, directa y legible -->
+    <header class="p-5 sm:p-7">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight mb-4">
+        ¿Tiene 65 años o más y paga contribuciones por su vivienda principal?
+      </h1>
+      
+      <!-- Dos frases explicativas -->
+      <p class="text-lg text-slate-700 mb-2">
+        Este beneficio legal permite eximir del 100% del pago de contribuciones de la vivienda habitacional donde reside efectivamente.
+      </p>
+      <p class="text-lg text-slate-700 mb-5">
+        Para acceder a él, no opera de forma automática: es necesario solicitarlo ante el Servicio de Impuestos Internos mediante una declaración jurada.
+      </p>
+
+      <!-- Recuadro del plazo y vigencia anual -->
+      <div class="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-4 my-4">
+        <p class="text-base sm:text-lg font-bold text-blue-950 mb-1">
+          Plazo clave: 31 de diciembre de 2026
+        </p>
+        <p class="text-base text-blue-900 leading-snug">
+          Al ser un beneficio de cómputo anual, debe presentar su declaración antes de esa fecha para que la exención comience a regir desde el <strong>1 de enero de 2027</strong>. Si la ingresa en enero de 2027, deberá pagar todo ese año y el beneficio regirá recién en 2028.
+        </p>
+      </div>
+
+      <!-- Acciones principales de la primera pantalla -->
+      <div class="flex flex-col gap-3 mt-6">
+        <button 
+          id="btn-start-wizard"
+          onclick="toggleWizard()" 
+          class="w-full py-4 px-5 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-lg text-center shadow-md active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+          aria-expanded="false"
+          aria-controls="wizard-container"
+        >
+          <span>🔍</span>
+          <span>Revisar si me corresponde</span>
+        </button>
+
+        <a 
+          href="https://homer.sii.cl/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="w-full py-3.5 px-5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-base text-center transition-colors flex items-center justify-center gap-2"
+        >
+          <span>Hacer el trámite en el SII</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <a 
+          href="#seccion-ayuda" 
+          onclick="openSpecificSection('seccion-ayuda')"
+          class="w-full py-3 px-5 bg-slate-50 hover:bg-slate-100 text-slate-800 border border-slate-300 font-semibold rounded-xl text-base text-center transition-colors print-hide"
+        >
+          Recibir ayuda presencial
+        </a>
+
+        <div class="flex justify-between items-center pt-2 print-hide text-sm text-slate-500">
+          <span>Trámite 100% gratuito</span>
+          <button type="button" onclick="window.print()" class="underline font-medium hover:text-slate-800 flex items-center gap-1">
+            🖨️ Imprimir guía (1 hoja)
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MÓDULO INTERACTIVO: Pregunta a la vez (Asistente sin recolección de datos) -->
+    <div id="wizard-container" class="hidden px-5 pb-6">
+      <div class="card-box bg-slate-50 border-2 border-blue-200 rounded-2xl p-5 shadow-sm">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 text-sm font-semibold text-slate-600">
+          <span id="wizard-step-indicator">Paso 1 de 4</span>
+          <button onclick="closeWizard()" class="text-slate-500 hover:text-slate-800 text-base font-bold px-2 py-1" aria-label="Cerrar orientador">✕ Cerrar</button>
+        </div>
+
+        <div id="wizard-content" class="fade-in">
+          <!-- Inyectado dinámicamente -->
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIONES DESPLEGABLES (ACORDEÓN EXCLUSIVO: 1 ABIERTA A LA VEZ) -->
+    <div class="border-t border-slate-200">
+
+      <!-- ITEM 1: Requisitos -->
+      <div class="border-b border-slate-200" id="seccion-requisitos">
+        <button 
+          type="button" 
+          class="accordion-btn w-full py-5 px-5 sm:px-7 text-left font-bold text-slate-900 hover:bg-slate-50 flex items-center justify-between gap-3 transition-colors"
+          onclick="toggleAccordion('panel-requisitos', this)"
+          aria-expanded="false" 
+          aria-controls="panel-requisitos"
+        >
+          <span class="text-lg sm:text-xl">Ver todos los requisitos</span>
+          <svg class="accordion-chevron w-6 h-6 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="panel-requisitos" class="accordion-panel hidden px-5 sm:px-7 pb-6 pt-1 text-slate-700">
+          <p class="mb-3 text-base">
+            Para evaluar si le corresponde solicitar la exención, la Ley N° 21.850 exige cumplir copulativamente las siguientes condiciones:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 mb-4 text-base">
+            <li><strong>Edad cumplida al 31 de diciembre:</strong> Tener 65 años o más a más tardar el 31 de diciembre de 2026 para que rija en 2027. Si cumple los 65 años durante 2027, podrá tramitarla para regir desde 2028.</li>
+            <li><strong>Vivienda principal:</strong> Debe ser la propiedad habitacional donde vive de forma permanente. Puede incluir como máximo un estacionamiento y una bodega del mismo rol o conjunto habitacional.</li>
+            <li><strong>Propiedad del inmueble:</strong> La vivienda debe estar inscrita a su nombre (o corresponder a casos especiales contemplados en la ley, como usufructo o comunidad hereditaria).</li>
+            <li><strong>Sin límite de ingresos ni avalúo:</strong> A diferencia de otros beneficios anteriores, esta exención del 100% no exige tope de ingresos mensuales ni límite de avalúo fiscal.</li>
+          </ul>
+
+          <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl mb-4 text-base text-amber-950">
+            <strong>Derechos de aseo municipal:</strong> La exención cubre únicamente las contribuciones fiscales (impuesto territorial). Si su comuna cobra derechos de aseo en la misma boleta, este cargo se seguirá cobrando y debe pagarse de forma normal.
+          </div>
+
+          <h3 class="font-bold text-slate-900 text-base mt-4 mb-2">Casos especiales</h3>
+          <p class="text-base text-slate-600 mb-2">
+            Si su vivienda está en copropiedad conyugal o con terceros, corresponde a una herencia indivisa, tiene un pequeño local comercial (uso mixto) o tiene convenios en Tesorería, consulte las respuestas oficiales:
+          </p>
+          <p class="text-base">
+            <a href="https://www.sii.cl/preguntas_frecuentes/catastro/catastro_faq.html" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-semibold underline">
+              Ver Preguntas Frecuentes de Bienes Raíces en el SII ↗
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 2: Paso a paso y qué necesito -->
+      <div class="border-b border-slate-200" id="seccion-paso-a-paso">
+        <button 
+          type="button" 
+          class="accordion-btn w-full py-5 px-5 sm:px-7 text-left font-bold text-slate-900 hover:bg-slate-50 flex items-center justify-between gap-3 transition-colors"
+          onclick="toggleAccordion('panel-paso-a-paso', this)"
+          aria-expanded="false" 
+          aria-controls="panel-paso-a-paso"
+        >
+          <span class="text-lg sm:text-xl">Qué necesito y cómo hago el trámite</span>
+          <svg class="accordion-chevron w-6 h-6 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="panel-paso-a-paso" class="accordion-panel hidden px-5 sm:px-7 pb-6 pt-1 text-slate-700">
+          
+          <div class="bg-slate-100 rounded-xl p-4 mb-5 border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-base mb-2">Lo que debe tener preparado:</h4>
+            <ul class="text-base space-y-2">
+              <li><strong>Clave de acceso:</strong> Su ClaveÚnica del Estado o su Clave Tributaria del SII. (Esta guía nunca le pedirá sus contraseñas).</li>
+              <li><strong>Rol de la propiedad:</strong> Número asignado por el SII que identifica su inmueble (ejemplo: Comuna Santiago, Rol 1234-56). Lo encuentra en cualquier boleta anterior de contribuciones.</li>
+              <li><strong>Si no está a su nombre en el SII:</strong> Si la propiedad no figura con su RUT en el sistema, necesitará adjuntar en PDF su <em>Certificado de Dominio Vigente</em> o <em>Copia de la Escritura Pública</em>.</li>
+            </ul>
+          </div>
+
+          <h4 class="font-bold text-slate-900 text-lg mb-3">Pasos en el sitio del SII:</h4>
+          <ol class="list-decimal pl-5 space-y-3 text-base mb-5">
+            <li>
+              <strong>Ingreso:</strong> Acceda a <a href="https://homer.sii.cl/" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline font-semibold">sii.cl</a> con su ClaveÚnica o Tributaria. Seleccione:
+              <div class="mt-1">
+                <span class="sii-badge">Servicios online</span> &gt; <span class="sii-badge">Avalúos y contribuciones de bienes raíces</span> &gt; <span class="sii-badge">Declaración jurada vivienda principal</span>.
+              </div>
+            </li>
+            <li>
+              <strong>Seleccione la propiedad:</strong>
+              <div class="mt-1 space-y-1">
+                <p>• Si figura a su nombre, marque <span class="sii-badge">Mis Propiedades</span> y elija el rol de su vivienda.</p>
+                <p>• Si no figura a su nombre, elija <span class="sii-badge">Otras Propiedades</span>, búsquela y adjunte su Certificado de Dominio Vigente en <span class="sii-badge">Documentos obligatorios</span>.</p>
+                <p>• Si tiene estacionamiento o bodega en el mismo rol o comunidad, regístrelos en <span class="sii-badge">Ingresar otros roles asociados a la solicitud</span>.</p>
+              </div>
+            </li>
+            <li>
+              <strong>Seleccione las opciones exactas:</strong>
+              <div class="mt-1">
+                <p>• En <strong>Grupo</strong> elija: <span class="sii-badge">Declaración Jurada de Vivienda Principal</span></p>
+                <p>• En <strong>Materia</strong> elija: <span class="sii-badge">Solicitud y Declaración Exención Vivienda Principal</span></p>
+              </div>
+            </li>
+            <li>
+              <strong>Fundamento y envío:</strong> Confirme la declaración jurada sobre veracidad legal. Presione el botón <span class="sii-badge">Grabar</span> y luego <span class="sii-badge">Enviar</span>.
+            </li>
+          </ol>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-base mb-4">
+            <p class="font-bold text-blue-950 mb-1">Importante: Comprobante vs. Resolución</p>
+            <p class="text-blue-900">
+              Al terminar, obtendrá un <strong>Comprobante de Envío</strong> que solo confirma la recepción. El resultado final se le notificará formalmente más adelante mediante una <strong>Resolución Fundada del SII</strong> por correo electrónico o carta postal.
+            </p>
+            <p class="text-blue-900 mt-2">
+              Puede consultar el avance en la opción <span class="sii-badge">Consultar sus solicitudes</span>.
+            </p>
+          </div>
+
+          <p class="text-base">
+            <a href="https://www.sii.cl/" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-semibold underline">
+              Ver Guía paso a paso oficial del SII con capturas de pantalla ↗
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 3: Dónde me pueden ayudar en persona -->
+      <div class="border-b border-slate-200" id="seccion-ayuda">
+        <button 
+          type="button" 
+          class="accordion-btn w-full py-5 px-5 sm:px-7 text-left font-bold text-slate-900 hover:bg-slate-50 flex items-center justify-between gap-3 transition-colors"
+          onclick="toggleAccordion('panel-ayuda', this)"
+          aria-expanded="false" 
+          aria-controls="panel-ayuda"
+        >
+          <span class="text-lg sm:text-xl">Dónde me pueden ayudar en persona</span>
+          <svg class="accordion-chevron w-6 h-6 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="panel-ayuda" class="accordion-panel hidden px-5 sm:px-7 pb-6 pt-1 text-slate-700">
+          <p class="mb-3 text-base">
+            Si no tiene ClaveÚnica, no tiene computador o prefiere que alguien lo guíe paso a paso, puede acudir presencialmente a una oficina del Servicio de Impuestos Internos. Un funcionario le prestará apoyo directo.
+          </p>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-4 text-base">
+            <p class="font-bold text-slate-900 mb-1">Cómo encontrar su oficina más cercana:</p>
+            <p class="mb-2">Revise direcciones y horarios de atención en el sitio institucional:</p>
+            <a href="https://www.sii.cl/sobre_el_sii/direcciones_y_telefonos.html" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-semibold underline block mb-3">
+              Directorio de oficinas y teléfonos del SII ↗
+            </a>
+            <p class="text-slate-600">
+              O comuníquese telefónicamente con la Mesa de Ayuda del SII al <strong>2 2395 1115</strong>.
+            </p>
+          </div>
+          <p class="text-sm text-slate-500">
+            Recuerde llevar su Cédula de Identidad vigente y, si la propiedad no está inscrita con su RUT, su Certificado de Dominio Vigente o copia de escritura.
+          </p>
+        </div>
+      </div>
+
+      <!-- ITEM 4: Ya tengo una rebaja de contribuciones (BAM) -->
+      <div class="border-b border-slate-200" id="seccion-rebaja">
+        <button 
+          type="button" 
+          class="accordion-btn w-full py-5 px-5 sm:px-7 text-left font-bold text-slate-900 hover:bg-slate-50 flex items-center justify-between gap-3 transition-colors"
+          onclick="toggleAccordion('panel-rebaja', this)"
+          aria-expanded="false" 
+          aria-controls="panel-rebaja"
+        >
+          <span class="text-lg sm:text-xl">Ya tengo una rebaja de contribuciones</span>
+          <svg class="accordion-chevron w-6 h-6 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="panel-rebaja" class="accordion-panel hidden px-5 sm:px-7 pb-6 pt-1 text-slate-700">
+          <p class="mb-3 text-base">
+            Si usted ya cuenta con el <strong>Beneficio Adulto Mayor (BAM)</strong> tradicional (que descuenta un 50% o 100% semestral según su tramo de ingresos y avalúo):
+          </p>
+          <ul class="list-disc pl-5 space-y-2 mb-4 text-base">
+            <li><strong>No pierde su beneficio actual:</strong> Solicitar esta nueva exención bajo la Ley N° 21.850 no anula sus derechos actuales ni genera perjuicio.</li>
+            <li><strong>Exención del 100% sin tope de ingresos:</strong> La nueva ley permite eximir el 100% de la vivienda principal sin exigir límites de ingresos ni de avalúo fiscal.</li>
+            <li><strong>Conveniencia:</strong> Si hoy solo tiene un 50% de rebaja en el BAM, o si antes quedaba fuera por sus ingresos o el avalúo de su casa, le conviene presentar esta declaración jurada para optar al 100% de exención.</li>
+          </ul>
+          <p class="text-sm text-slate-500">
+            En caso de dudas sobre su situación particular, solicite la orientación de un funcionario en la oficina del SII o mediante la Mesa de Ayuda.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PIE DE PÁGINA: Fuentes oficiales y atribución jurídica -->
+    <footer class="bg-slate-100 p-5 sm:p-7 border-t border-slate-200 text-xs sm:text-sm text-slate-600 leading-normal">
+      <h4 class="font-bold text-slate-800 uppercase tracking-wider mb-2">Fuentes oficiales consultadas</h4>
+      <ul class="space-y-1 mb-3">
+        <li>• Artículo 10 de la Ley N° 21.850.</li>
+        <li>• Ficha oficial del beneficio (Servicio de Impuestos Internos).</li>
+        <li>• Guía paso a paso oficial del SII: Declaración Jurada Vivienda Principal.</li>
+        <li>• Preguntas frecuentes del SII sobre Bienes Raíces y Beneficio Adulto Mayor.</li>
+        <li>• Comunicado de prensa del SII del 11 de noviembre de 2026.</li>
+      </ul>
+      <p class="text-slate-600 mb-2">
+        <strong>Atribución del SII sobre la vigencia anual y renovación:</strong> La ley y la ficha aluden a una declaración anual debido a que el impuesto territorial opera por año calendario cerrado. Conforme aclaró el SII en su comunicado del 11 de noviembre de 2026, una vez que la exención es otorgada mediante resolución, <em>se renueva automáticamente año a año</em> si el contribuyente mantiene los requisitos, sin necesidad de rehacer el trámite anualmente.
+      </p>
+      <p class="text-slate-500 pt-2 border-t border-slate-200">
+        Página de orientación informativa ciudadana. No almacena datos personales ni sustituye la resolución formal del SII. Fecha de actualización: 11 de noviembre de 2026.
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- LÓGICA JAVASCRIPT: Acordeón exclusivo y Wizard paso a paso -->
+  <script>
+    // --- 1. GESTIÓN DEL ACORDEÓN (SOLO UNO ABIERTO A LA VEZ, SIN SALTOS BRUSCOS) ---
+    function toggleAccordion(panelId, buttonEl) {
+      const panel = document.getElementById(panelId);
+      const isCurrentlyExpanded = buttonEl.getAttribute('aria-expanded') === 'true';
+
+      // Cerrar todos los paneles
+      document.querySelectorAll('.accordion-panel').forEach(p => {
+        p.classList.add('hidden');
+      });
+      document.querySelectorAll('.accordion-btn').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+
+      // Si no estaba abierto, abrir el seleccionado justo debajo
+      if (!isCurrentlyExpanded) {
+        panel.classList.remove('hidden');
+        buttonEl.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    function openSpecificSection(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const button = container.querySelector('.accordion-btn');
+      const panel = container.querySelector('.accordion-panel');
+      
+      // Cerrar otros
+      document.querySelectorAll('.accordion-panel').forEach(p => p.classList.add('hidden'));
+      document.querySelectorAll('.accordion-btn').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+
+      panel.classList.remove('hidden');
+      button.setAttribute('aria-expanded', 'true');
+
+      // Scroll suave hacia la sección
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // --- 2. ASISTENTE INTERACTIVO («REVISAR SI ME CORRESPONDE») ---
+    const wizardQuestions = [
+      {
+        id: 'edad',
+        title: '¿Tiene 65 años o más cumplidos a más tardar el 31 de diciembre de 2026?',
+        clarification: 'Para el año tributario 2027, la ley exige haber cumplido los 65 años antes de que comience ese año. Si los cumple durante 2027, podrá solicitar el beneficio para 2028.'
+      },
+      {
+        id: 'vivienda',
+        title: '¿La propiedad por la que consulta es su vivienda principal (donde efectivamente vive)?',
+        clarification: 'El beneficio está destinado a proteger la casa o departamento donde reside permanentemente (y que es de su propiedad). No aplica para segundas viviendas, propiedades de veraneo o arriendos.'
+      },
+      {
+        id: 'contribuciones',
+        title: '¿Paga contribuciones (impuesto territorial) por esta vivienda actualmente?',
+        clarification: 'Muchas viviendas de menor avalúo ya están 100% exentas por ley general y solo pagan derechos de aseo municipal. Si su recibo dice cuota $0 en contribuciones, ya goza de exención base. Esta nueva ley exime el 100% sin límite de ingresos ni avalúo.'
+      }
+    ];
+
+    let currentStep = 0;
+    let userAnswers = {};
+
+    function toggleWizard() {
+      const container = document.getElementById('wizard-container');
+      const btn = document.getElementById('btn-start-wizard');
+      const isHidden = container.classList.contains('hidden');
+
+      if (isHidden) {
+        container.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        renderQuestion(currentStep);
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        closeWizard();
+      }
+    }
+
+    function closeWizard() {
+      const container = document.getElementById('wizard-container');
+      const btn = document.getElementById('btn-start-wizard');
+      container.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function renderQuestion(stepIndex) {
+      const container = document.getElementById('wizard-content');
+      const stepIndicator = document.getElementById('wizard-step-indicator');
+      
+      stepIndicator.textContent = `Pregunta ${stepIndex + 1} de ${wizardQuestions.length}`;
+      const q = wizardQuestions[stepIndex];
+      const previousAnswer = userAnswers[q.id];
+
+      container.innerHTML = `
+        <div class="fade-in">
+          <p class="text-xl font-bold text-slate-900 mb-3">${q.title}</p>
+          <div class="bg-blue-50/70 border-l-3 border-blue-400 p-3 rounded text-sm text-slate-700 mb-4">
+            ${q.clarification}
+          </div>
+
+          ${previousAnswer ? `
+            <div class="mb-3 text-sm text-blue-900 font-medium">
+              Su respuesta seleccionada: <strong>${previousAnswer}</strong>
+            </div>
+          ` : ''}
+
+          <div class="flex flex-col gap-2.5 sm:gap-3">
+            <button onclick="handleAnswer('Sí')" class="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-lg text-center transition-all">
+              Sí
+            </button>
+            <button onclick="handleAnswer('No')" class="w-full py-3.5 px-4 bg-white hover:bg-slate-100 text-slate-800 border-2 border-slate-300 font-bold rounded-xl text-lg text-center transition-all">
+              No
+            </button>
+            <button onclick="handleAnswer('No estoy seguro')" class="w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-base text-center transition-all">
+              No estoy seguro
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between pt-4 mt-3 border-t border-slate-200">
+            ${stepIndex > 0 ? `
+              <button onclick="previousQuestion()" class="text-slate-600 hover:text-slate-900 text-sm font-semibold flex items-center gap-1">
+                ← Volver a la anterior
+              </button>
+            ` : '<span></span>'}
+            <button onclick="restartWizard()" class="text-slate-400 hover:text-slate-600 text-xs underline">
+              Reiniciar preguntas
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function handleAnswer(answer) {
+      const q = wizardQuestions[currentStep];
+      userAnswers[q.id] = answer;
+
+      if (currentStep < wizardQuestions.length - 1) {
+        currentStep++;
+        renderQuestion(currentStep);
+      } else {
+        renderWizardSummary();
+      }
+    }
+
+    function previousQuestion() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderQuestion(currentStep);
+      }
+    }
+
+    function restartWizard() {
+      currentStep = 0;
+      userAnswers = {};
+      renderQuestion(0);
+    }
+
+    function renderWizardSummary() {
+      const container = document.getElementById('wizard-content');
+      const stepIndicator = document.getElementById('wizard-step-indicator');
+      stepIndicator.textContent = "Resumen de su orientación";
+
+      const hasNo = Object.values(userAnswers).includes('No');
+      const hasUnsure = Object.values(userAnswers).includes('No estoy seguro');
+
+      let orientationMessage = "";
+
+      if (hasNo) {
+        orientationMessage = `
+          <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl mb-4 text-base text-amber-950">
+            <strong>Revisión recomendada:</strong> Ha respondido «No» en alguna condición (como edad o vivienda principal). Es posible que no cumpla todos los requisitos para 2027, pero le conviene verificar su situación directamente o recibir apoyo en una oficina del SII antes del plazo.
+          </div>
+        `;
+      } else if (hasUnsure) {
+        orientationMessage = `
+          <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-xl mb-4 text-base text-blue-950">
+            <strong>Le conviene consultar formalmente:</strong> Si tiene dudas sobre su recibo de contribuciones o la inscripción de la propiedad, el portal del SII o un funcionario en oficina revisarán sus antecedentes sin costo.
+          </div>
+        `;
+      } else {
+        orientationMessage = `
+          <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r-xl mb-4 text-base text-emerald-950">
+            <strong>Cumple con el perfil de solicitud:</strong> Recuerde que esta exención no tiene límite de ingresos ni avalúo. Le conviene formalizar la declaración jurada antes del 31 de diciembre de 2026 en el SII para optar al 100% de exención en 2027.
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="fade-in">
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Orientación personalizada</h3>
+          <p class="text-sm text-slate-500 mb-4">
+            (Esta orientación es referencial y no constituye un veredicto definitivo; el resultado formal siempre lo emite el SII mediante resolución).
+          </p>
+
+          ${orientationMessage}
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3 mb-4 text-sm text-slate-700">
+            <p class="font-bold mb-2">Sus respuestas registradas:</p>
+            <ul class="space-y-1">
+              <li>• Edad cumplida al 31/12/2026: <strong>${userAnswers['edad'] || '-'}</strong></li>
+              <li>• Vivienda principal donde reside: <strong>${userAnswers['vivienda'] || '-'}</strong></li>
+              <li>• Paga contribuciones hoy: <strong>${userAnswers['contribuciones'] || '-'}</strong></li>
+            </ul>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <a 
+              href="https://homer.sii.cl/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-base text-center transition-colors"
+            >
+              Ir a hacer la declaración jurada en el SII ↗
+            </a>
+            <button 
+              onclick="openSpecificSection('seccion-paso-a-paso')" 
+              class="w-full py-3 px-4 bg-blue-50 text-blue-800 font-semibold rounded-xl text-base hover:bg-blue-100 transition-colors"
+            >
+              Ver el paso a paso detallado
+            </button>
+            <button 
+              onclick="restartWizard()" 
+              class="text-slate-500 hover:text-slate-700 text-sm underline py-2"
+            >
+              Volver a responder las preguntas
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
